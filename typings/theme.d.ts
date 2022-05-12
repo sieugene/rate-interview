@@ -1,4 +1,4 @@
-import {CustomizeOptions} from '@app/index';
+import {CustomizeOptions} from '../src/@app';
 
 // Theme global declaration
 declare module '@emotion/react' {

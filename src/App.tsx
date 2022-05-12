@@ -9,10 +9,13 @@
  */
 
 import styled from '@emotion/native';
+
 import React from 'react';
 import {SafeAreaView, useColorScheme, View} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {CustomThemeProvider} from './@app';
+import {Provider} from 'react-redux';
+import {CustomThemeProvider, store} from './@app';
+import {Counter} from './features/counter';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -22,13 +25,16 @@ const App = () => {
   };
 
   return (
-    <CustomThemeProvider>
-      <SafeAreaView style={backgroundStyle}>
-        <View>
-          <StyledText>Test</StyledText>
-        </View>
-      </SafeAreaView>
-    </CustomThemeProvider>
+    <Provider store={store}>
+      <CustomThemeProvider>
+        <SafeAreaView style={backgroundStyle}>
+          <View>
+            <StyledText>Test</StyledText>
+            <Counter />
+          </View>
+        </SafeAreaView>
+      </CustomThemeProvider>
+    </Provider>
   );
 };
 
