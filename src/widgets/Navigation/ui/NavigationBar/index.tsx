@@ -1,44 +1,51 @@
+import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import * as React from 'react';
-import {Button, Text, View} from 'react-native';
+import React from 'react';
+import {
+  AuthorizeLogin,
+  AuthorizeMain,
+  AuthorizeRegister,
+} from '../../../../screens/Authorize';
 import {ROUTES} from '../../../../shared/lib/routes';
-import {NavigateProps, RootStackParamList} from '../../model/type';
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator();
+const Tab = createMaterialBottomTabNavigator();
 
 const NavigationBar = () => {
+  const hide = false;
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name={ROUTES.home}
-        component={HomeScreen}
-        options={{title: 'Overview'}}
-      />
-      <Stack.Screen name={ROUTES.another} component={AnotherScreen} />
-    </Stack.Navigator>
+    <>
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name={ROUTES.AUTH}>
+          {() => (
+            <Tab.Navigator barStyle={hide ? {display: 'none'} : {}}>
+              <Tab.Screen
+                name={ROUTES.AUTH_MAIN}
+                component={AuthorizeMain}
+                options={{
+                  tabBarLabel: undefined,
+                }}
+              />
+              <Tab.Screen
+                name={ROUTES.AUTH_LOGIN}
+                component={AuthorizeLogin}
+                options={{
+                  tabBarLabel: undefined,
+                }}
+              />
+              <Tab.Screen
+                name={ROUTES.AUTH_REGISTER}
+                component={AuthorizeRegister}
+                options={{
+                  tabBarLabel: undefined,
+                }}
+              />
+            </Tab.Navigator>
+          )}
+        </Stack.Screen>
+      </Stack.Navigator>
+    </>
   );
 };
-
-const HomeScreen: React.FC<NavigateProps<ROUTES.home>> = ({navigation}) => {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Home Screen</Text>
-      <Button
-        title="to another screen"
-        onPress={() => {
-          navigation.navigate(ROUTES.another);
-        }}
-      />
-    </View>
-  );
-};
-
-function AnotherScreen() {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Another Screen</Text>
-    </View>
-  );
-}
 
 export default NavigationBar;
