@@ -5,5 +5,7 @@ export enum ROUTES {
   AUTH_REGISTER = 'auth_register',
 
   HOME = 'home',
-  HOME_INFO = 'home_info',
+  COMPANIES = 'companies',
+  SEARCH = 'search',
+  PROFILE = 'profile',
 }
