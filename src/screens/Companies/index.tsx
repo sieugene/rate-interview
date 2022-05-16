@@ -1,10 +1,11 @@
-import {Text, View} from 'react-native';
 import React from 'react';
+import {CompaniesList} from '../../features/companies/ui';
+import {Container} from '../../shared/ui';
 
 export const CompaniesScreen = () => {
   return (
-    <View>
-      <Text>Companies list</Text>
-    </View>
+    <Container>
+      <CompaniesList />
+    </Container>
   );
 };
