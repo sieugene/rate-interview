@@ -1,7 +1,7 @@
 import styled from '@emotion/native';
 import React from 'react';
-import {Button, StyleProp, StyleSheet, ViewStyle} from 'react-native';
-import {TransformOnTouch} from '../../../../shared/ui';
+import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
+import {Button, TransformOnTouch, Typography} from '../../../../shared/ui';
 import {CompanyType} from '../../model/types';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -18,7 +18,9 @@ export const CompanyItem = ({company, styles}: Props) => {
         <CompanyItem.Geo>{company.geo}</CompanyItem.Geo>
         <CompanyItem.Rate>Rate: {company.rate}</CompanyItem.Rate>
         <Icon name="business" size={30} color="#4F8EF7" />
-        <Button title="open" />
+        <Button style={{width: 150}} icon="business">
+          open
+        </Button>
       </CompanyItem.Root>
     </TransformOnTouch>
   );
@@ -30,14 +32,12 @@ CompanyItem.Root = styled.View`
   padding: 8px;
 `;
 
-CompanyItem.Name = styled.Text`
+CompanyItem.Name = styled(Typography)`
   font-weight: 700;
 `;
-CompanyItem.About = styled.Text``;
-CompanyItem.Geo = styled.Text`
-  font-weight: 600;
-`;
-CompanyItem.Rate = styled.Text``;
+CompanyItem.About = styled(Typography)``;
+CompanyItem.Geo = styled(Typography)``;
+CompanyItem.Rate = styled(Typography)``;
 
 const style = StyleSheet.create({
   shadow: {

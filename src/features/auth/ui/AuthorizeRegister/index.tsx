@@ -1,10 +1,10 @@
 import styled from '@emotion/native';
 import React from 'react';
-import {Button, Text} from 'react-native';
+import {Button} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import {RootState} from '../../../../@app';
 import {useAppDispatch, useAppSelector} from '../../../../@app/store/hooks';
-import {Container} from '../../../../shared/ui';
+import {Container, Typography} from '../../../../shared/ui';
 import {registerThunk, updateRegisterForm} from '../model/store';
 
 const AuthorizeRegister = () => {
@@ -25,7 +25,7 @@ const AuthorizeRegister = () => {
   };
   return (
     <AuthorizeRegister.Root>
-      <Text>Sign Up</Text>
+      <Typography>Sign Up</Typography>
       <TextInput
         placeholder="Email Address"
         value={email}
@@ -42,7 +42,7 @@ const AuthorizeRegister = () => {
         onChangeText={value => onChange(value, 'repassword')}
       />
       <Button title="sign up" onPress={onSubmit} />
-      <Text>Do you have an account? Sign in</Text>
+      <Typography>Do you have an account? Sign in</Typography>
     </AuthorizeRegister.Root>
   );
 };

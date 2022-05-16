@@ -3,7 +3,7 @@ import React from 'react';
 import {Button, View} from 'react-native';
 import {ComunityIllustration} from '../../../../shared/images';
 import {ROUTES} from '../../../../shared/lib/routes';
-import {Container} from '../../../../shared/ui';
+import {Container, Typography} from '../../../../shared/ui';
 import {NavigateProps} from '../../../../widgets';
 
 const AuthorizeMain = ({navigation}: NavigateProps<ROUTES.AUTH_MAIN>) => {
@@ -48,17 +48,9 @@ AuthorizeMain.Root = styled(Container)`
   padding: 10px;
 `;
 
-AuthorizeMain.Label = styled.Text`
-  font-weight: 700;
-  font-size: 24px;
-  color: black;
-  text-align: left;
-`;
+AuthorizeMain.Label = styled(Typography)``;
 
-AuthorizeMain.Text = styled.Text`
-  font-size: 16px;
-  text-align: left;
-`;
+AuthorizeMain.Text = styled(Typography)``;
 
 AuthorizeMain.BtnsGroup = styled.View`
   justify-content: space-between;

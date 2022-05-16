@@ -1,10 +1,10 @@
 import styled from '@emotion/native';
 import React from 'react';
-import {Button, Text} from 'react-native';
+import {Button} from 'react-native';
 import {TextInput} from 'react-native-paper';
 import {RootState} from '../../../../@app';
 import {useAppDispatch, useAppSelector} from '../../../../@app/store/hooks';
-import {Container} from '../../../../shared/ui';
+import {Container, Typography} from '../../../../shared/ui';
 import {loginThunk, updateLoginForm} from '../model/store';
 
 const AuthorizeLogin = () => {
@@ -24,7 +24,7 @@ const AuthorizeLogin = () => {
   };
   return (
     <AuthorizeLogin.Root>
-      <Text>Log in</Text>
+      <Typography>Log in</Typography>
       <TextInput
         placeholder="Email Address"
         onChangeText={value => onChange(value, 'email')}
@@ -38,7 +38,7 @@ const AuthorizeLogin = () => {
         secureTextEntry
       />
       <Button title="login" onPress={onSubmit} />
-      <Text>Don’t have an account? Sign up</Text>
+      <Typography>Don’t have an account? Sign up</Typography>
     </AuthorizeLogin.Root>
   );
 };

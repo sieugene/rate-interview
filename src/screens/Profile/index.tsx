@@ -1,9 +1,10 @@
-import {Text, View} from 'react-native';
 import React from 'react';
+import {View} from 'react-native';
+import {Typography} from '../../shared/ui';
 export const ProfileScreen = () => {
   return (
     <View>
-      <Text>Profile</Text>
+      <Typography>Profile</Typography>
     </View>
   );
 };
