@@ -40,7 +40,7 @@ export const CompanyItem = ({company, styles}: Props) => {
 
           <CompanyItem.Image
             source={{
-              uri: 'https://hsto.org/getpro/moikrug/uploads/company/100/006/341/2/logo/medium_ec0ed33f5cb160c20cdc1ba499a75d2b.png',
+              uri: company.image,
             }}
           />
         </CompanyItem.Head>
@@ -68,7 +68,7 @@ export const CompanyItem = ({company, styles}: Props) => {
             }}>
             Learn more
           </Button>
-          <CompanyDetails />
+          <CompanyDetails companyId={company.id} />
         </CompanyItem.BtnsGroup>
       </CompanyItem.Root>
     </TransformOnTouch>

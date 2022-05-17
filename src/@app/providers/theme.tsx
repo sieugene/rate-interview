@@ -1,12 +1,21 @@
 import {css} from '@emotion/native';
 import {ThemeProvider} from '@emotion/react';
 import React, {FC} from 'react';
+import {StyleSheet} from 'react-native';
 
 export type CustomizeOptions = typeof theme;
 export type TypographyVariants = keyof typeof typography;
 export type ButtonVariants = keyof typeof buttons;
 export type Colors = keyof typeof colors;
 export type FontWeights = keyof typeof fontWeight;
+
+const colors = {
+  white: '#FFFFFF',
+  tinyWhite: '#f7f9fc',
+  black: '#010104',
+  primary: '#4838D1',
+  silver: '#919294',
+};
 
 const baseButton = css`
   justify-content: center;
@@ -19,11 +28,11 @@ const baseButton = css`
 const buttons = {
   flat: css`
     ${baseButton}
-    background: #4838d1;
+    background: ${colors.primary};
   `,
   outline: css`
     ${baseButton}
-    border: 1px solid #4838d1;
+    border: 1px solid ${colors.primary};
   `,
   ghost: css`
     ${baseButton}
@@ -47,12 +56,6 @@ const fontWeight = {
     font-family: 'Poppins-Bold';
     font-weight: 700;
   `,
-};
-
-const colors = {
-  white: '#FFFFFF',
-  black: '#010104',
-  primary: '#4838D1',
 };
 
 const typography = {
@@ -98,11 +101,46 @@ const typography = {
   `,
 };
 
+const boxShadows = StyleSheet.create({
+  card: {
+    shadowColor: colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  modal: {
+    shadowColor: colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  tabs: {
+    shadowColor: colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 2.22,
+
+    elevation: 3,
+  },
+});
+
 const theme = {
   colors,
   typography,
   fontWeight,
   buttons,
+  boxShadows,
 };
 
 const CustomThemeProvider: FC = ({children}) => {

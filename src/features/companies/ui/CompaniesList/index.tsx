@@ -1,11 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {FlatList, SafeAreaView} from 'react-native';
-import {CompaniesListData} from '../../data/companies.data';
+import {useAllCompanies} from '../../hooks/useAllCompanies';
 import {CompanyItem} from '../CompanyItem';
 
 const CompaniesList = () => {
-  const data = CompaniesListData;
+  const data = useAllCompanies();
 
   return (
     <SafeAreaView>

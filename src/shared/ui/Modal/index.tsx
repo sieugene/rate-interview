@@ -3,7 +3,6 @@ import React from 'react';
 import {
   Modal as ModalRN,
   ModalProps,
-  StyleSheet,
   TouchableWithoutFeedback,
 } from 'react-native';
 
@@ -43,16 +42,3 @@ Modal.Overlay = styled.View`
   height: 100%;
   width: 100%;
 `;
-
-Modal.shadow = StyleSheet.create({
-  modalShadow: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-});
