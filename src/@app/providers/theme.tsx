@@ -112,6 +112,17 @@ const boxShadows = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
+  image: {
+    shadowColor: colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0.46,
+    shadowRadius: 11.14,
+
+    elevation: 17,
+  },
   modal: {
     shadowColor: colors.black,
     shadowOffset: {

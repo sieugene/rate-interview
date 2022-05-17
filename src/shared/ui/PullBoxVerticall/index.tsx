@@ -3,6 +3,8 @@ import styled from '@emotion/native';
 import React, {useRef} from 'react';
 import {Animated, PanResponder, StyleProp, ViewStyle} from 'react-native';
 import {extractAnimateValue} from '../../lib/panResponser/extractAnimateValue';
+import {computeAllowPull} from './lib/computeAllowPull';
+import {BoxTrigger, PullBoxEvent} from './model/types';
 
 type Props = {
   onEnd: () => void;
@@ -10,19 +12,22 @@ type Props = {
   children: React.ReactNode;
   canNegative?: boolean;
   style?: StyleProp<ViewStyle>;
+  boxTrigger?: BoxTrigger;
 };
-const PullBoxHorizontal = ({
+const PullBoxVerticall = ({
   onEnd,
   closeOnY = 200,
   style,
   canNegative = false,
   children,
+  boxTrigger,
 }: Props) => {
   const pan = useRef(new Animated.ValueXY()).current;
   const panResponder = useRef(
     PanResponder.create({
-      onMoveShouldSetPanResponder: () => true,
-      onStartShouldSetPanResponder: () => true,
+      onStartShouldSetPanResponder: event =>
+        computeAllowPull(event as PullBoxEvent, boxTrigger),
+
       onPanResponderMove: Animated.event(
         [
           null,
@@ -57,7 +62,7 @@ const PullBoxHorizontal = ({
   ).current;
 
   return (
-    <PullBoxHorizontal.Root style={[style || {}]}>
+    <PullBoxVerticall.Root style={[style || {}]}>
       <Animated.View
         style={{
           flex: 1,
@@ -66,14 +71,14 @@ const PullBoxHorizontal = ({
         {...panResponder.panHandlers}>
         {children}
       </Animated.View>
-    </PullBoxHorizontal.Root>
+    </PullBoxVerticall.Root>
   );
 };
 
-PullBoxHorizontal.Root = styled.View`
+PullBoxVerticall.Root = styled.View`
   width: 100%;
   height: 100%;
   flex: 1;
 `;
 
-export default PullBoxHorizontal;
+export default PullBoxVerticall;

@@ -10,14 +10,14 @@ import {
   TransformOnTouch,
   Typography,
 } from '../../../../shared/ui';
-import {CompanyType} from '../../model/types';
-import {CompanyDetails} from '../CompanyDetails';
+import {CompanyType} from '../../../../features/companies/model/types';
+import CompanyDetails from '../CompanyDetails';
 
 type Props = {
   company: CompanyType;
   styles?: StyleProp<ViewStyle>;
 };
-export const CompanyItem = ({company, styles}: Props) => {
+const CompanyItem = ({company, styles}: Props) => {
   const theme = useTheme();
   return (
     <TransformOnTouch>
@@ -109,3 +109,5 @@ CompanyItem.BtnsGroup = styled.View`
   align-items: center;
   flex-direction: row;
 `;
+
+export default CompanyItem;

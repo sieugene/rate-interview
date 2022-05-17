@@ -1,6 +1,6 @@
 import styled from '@emotion/native';
 import React from 'react';
-import {StyleProp, TextStyle} from 'react-native';
+import {StyleProp, TextProps, TextStyle} from 'react-native';
 import {
   Colors,
   FontWeights,
@@ -13,7 +13,7 @@ export type TypographyProps = {
   variant?: TypographyVariants;
   color?: Colors;
   fontWeight?: FontWeights;
-};
+} & TextProps;
 const Typography = ({
   children,
   variant = 'h6',
