@@ -1,53 +1,109 @@
+/* eslint-disable react-native/no-inline-styles */
 import styled from '@emotion/native';
+import {useTheme} from '@emotion/react';
 import React from 'react';
-import {StyleProp, StyleSheet, ViewStyle} from 'react-native';
-import {Button, TransformOnTouch, Typography} from '../../../../shared/ui';
-import {CompanyType} from '../../model/types';
+import {StyleProp, ViewStyle} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {
+  Button,
+  Card,
+  TransformOnTouch,
+  Typography,
+} from '../../../../shared/ui';
+import {CompanyType} from '../../model/types';
 
 type Props = {
   company: CompanyType;
   styles?: StyleProp<ViewStyle>;
 };
 export const CompanyItem = ({company, styles}: Props) => {
+  const theme = useTheme();
   return (
     <TransformOnTouch>
-      <CompanyItem.Root style={[style.shadow, styles || {}]}>
-        <CompanyItem.Name>{company.name}</CompanyItem.Name>
-        <CompanyItem.About>About: {company.about}</CompanyItem.About>
-        <CompanyItem.Geo>{company.geo}</CompanyItem.Geo>
-        <CompanyItem.Rate>Rate: {company.rate}</CompanyItem.Rate>
-        <Icon name="business" size={30} color="#4F8EF7" />
-        <Button style={{width: 150}} icon="business">
-          open
-        </Button>
+      <CompanyItem.Root style={styles}>
+        <CompanyItem.Head>
+          <CompanyItem.Label>
+            <Typography variant="h4" fontWeight="simeBold">
+              {company.name}
+            </Typography>
+            <Typography
+              variant="h5"
+              color="primary"
+              style={{
+                marginLeft: 10,
+              }}>
+              <Icon name="star" size={18} color={theme.colors.primary} />{' '}
+              {company.rate}
+            </Typography>
+          </CompanyItem.Label>
+
+          <CompanyItem.Image
+            source={{
+              uri: 'https://hsto.org/getpro/moikrug/uploads/company/100/006/341/2/logo/medium_ec0ed33f5cb160c20cdc1ba499a75d2b.png',
+            }}
+          />
+        </CompanyItem.Head>
+
+        <CompanyItem.Info>
+          <Typography variant="tiny" fontWeight="simeBold">
+            {company.geo}
+          </Typography>
+          <CompanyItem.About variant="tiny">{company.about}</CompanyItem.About>
+        </CompanyItem.Info>
+
+        <CompanyItem.BtnsGroup>
+          <Button
+            style={{width: 78, height: 32}}
+            typographyProps={{
+              variant: 'small',
+            }}>
+            Rate
+          </Button>
+          <Button
+            style={{width: 78, height: 32}}
+            variant="ghost"
+            typographyProps={{
+              variant: 'small',
+            }}>
+            Learn more
+          </Button>
+        </CompanyItem.BtnsGroup>
       </CompanyItem.Root>
     </TransformOnTouch>
   );
 };
 
-CompanyItem.Root = styled.View`
-  background-color: white;
-  border-radius: 8px;
-  padding: 8px;
+CompanyItem.Root = styled(Card)``;
+
+CompanyItem.Head = styled.View`
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `;
 
-CompanyItem.Name = styled(Typography)`
-  font-weight: 700;
+CompanyItem.Label = styled.View`
+  flex-direction: row;
+  align-items: center;
 `;
-CompanyItem.About = styled(Typography)``;
-CompanyItem.Geo = styled(Typography)``;
-CompanyItem.Rate = styled(Typography)``;
 
-const style = StyleSheet.create({
-  shadow: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-});
+CompanyItem.Image = styled.Image`
+  width: 50px;
+  height: 50px;
+  resize-mode: contain;
+`;
+
+CompanyItem.Info = styled.View`
+  margin-bottom: 15px;
+`;
+
+CompanyItem.About = styled(Typography)`
+  max-width: 350px;
+`;
+
+CompanyItem.BtnsGroup = styled.View`
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+`;
