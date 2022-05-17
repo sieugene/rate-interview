@@ -11,6 +11,7 @@ import {
   Typography,
 } from '../../../../shared/ui';
 import {CompanyType} from '../../model/types';
+import {CompanyDetails} from '../CompanyDetails';
 
 type Props = {
   company: CompanyType;
@@ -67,6 +68,7 @@ export const CompanyItem = ({company, styles}: Props) => {
             }}>
             Learn more
           </Button>
+          <CompanyDetails />
         </CompanyItem.BtnsGroup>
       </CompanyItem.Root>
     </TransformOnTouch>
