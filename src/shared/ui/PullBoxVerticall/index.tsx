@@ -1,32 +1,35 @@
 /* eslint-disable react-native/no-inline-styles */
 import styled from '@emotion/native';
 import React, {useRef} from 'react';
-import {Animated, PanResponder, StyleProp, ViewStyle} from 'react-native';
+import {
+  Animated,
+  GestureResponderHandlers,
+  PanResponder,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 import {extractAnimateValue} from '../../lib/panResponser/extractAnimateValue';
-import {computeAllowPull} from './lib/computeAllowPull';
-import {BoxTrigger, PullBoxEvent} from './model/types';
 
 type Props = {
   onEnd: () => void;
   closeOnY?: number;
   children: React.ReactNode;
-  canNegative?: boolean;
+  direction?: 'bottom' | 'bottom-and-top';
   style?: StyleProp<ViewStyle>;
-  boxTrigger?: BoxTrigger;
+  renderBoxTrigger: (panHandlers: GestureResponderHandlers) => JSX.Element;
 };
 const PullBoxVerticall = ({
   onEnd,
   closeOnY = 200,
   style,
-  canNegative = false,
+  direction = 'bottom',
+  renderBoxTrigger,
   children,
-  boxTrigger,
 }: Props) => {
   const pan = useRef(new Animated.ValueXY()).current;
   const panResponder = useRef(
     PanResponder.create({
-      onStartShouldSetPanResponder: event =>
-        computeAllowPull(event as PullBoxEvent, boxTrigger),
+      onStartShouldSetPanResponder: () => true,
 
       onPanResponderMove: Animated.event(
         [
@@ -39,6 +42,7 @@ const PullBoxVerticall = ({
           useNativeDriver: false,
           listener: () => {
             const currentY = extractAnimateValue(pan.y);
+            const canNegative = direction !== 'bottom';
             if (!canNegative && currentY < 0) {
               pan.y.setValue(0);
             }
@@ -63,12 +67,12 @@ const PullBoxVerticall = ({
 
   return (
     <PullBoxVerticall.Root style={[style || {}]}>
+      {renderBoxTrigger(panResponder.panHandlers)}
       <Animated.View
         style={{
           flex: 1,
           transform: [{translateX: pan.x}, {translateY: pan.y}],
-        }}
-        {...panResponder.panHandlers}>
+        }}>
         {children}
       </Animated.View>
     </PullBoxVerticall.Root>

@@ -34,10 +34,9 @@ const CompanyDetails = ({companyId}: Props) => {
       <Button onPress={onOpen}>open</Button>
       <Modal visible={visible} onClose={onClose} animationType="slide">
         <PullBoxVerticall
-          boxTrigger={{
-            yFrom: 0,
-            yTo: 35,
-          }}
+          renderBoxTrigger={panHandlers => (
+            <CompanyDetails.TopTrigger {...panHandlers} />
+          )}
           onEnd={onClose}
           style={{
             marginTop: 100,
@@ -90,6 +89,13 @@ const CompanyDetails = ({companyId}: Props) => {
     </View>
   );
 };
+
+CompanyDetails.TopTrigger = styled.View`
+  height: 200px;
+  width: 100%;
+  position: absolute;
+  z-index: 999;
+`;
 
 CompanyDetails.Root = styled.View`
   background-color: white;
