@@ -1,20 +1,20 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {FlatList, SafeAreaView} from 'react-native';
-import {CompanyItem} from '../../../../entites/company';
+import {VacancyItem} from '../../../../entites/vacancy';
 
-import {useAllCompanies} from '../../hooks/useAllCompanies';
+import {useAllVacancies} from '../../hooks/useAllVacancies';
 
-const CompaniesList = () => {
-  const data = useAllCompanies();
+const VacanciesList = () => {
+  const data = useAllVacancies();
 
   return (
     <SafeAreaView>
       <FlatList
         data={data}
-        renderItem={company => (
-          <CompanyItem
-            company={company.item}
+        renderItem={vacancy => (
+          <VacancyItem
+            vacancy={vacancy.item}
             styles={{
               margin: 10,
             }}
@@ -26,4 +26,4 @@ const CompaniesList = () => {
   );
 };
 
-export default CompaniesList;
+export default VacanciesList;

@@ -1,10 +1,12 @@
 import React from 'react';
-import {View} from 'react-native';
-import {Typography} from '../../shared/ui';
+
+import {VacanciesSearch} from '../../features/vacancies-search/ui';
+import {Container} from '../../shared/ui';
+
 export const SearchScreen = () => {
   return (
-    <View>
-      <Typography>Search Companies</Typography>
-    </View>
+    <Container>
+      <VacanciesSearch />
+    </Container>
   );
 };

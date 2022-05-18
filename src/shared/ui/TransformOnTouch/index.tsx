@@ -1,10 +1,15 @@
 import React, {FC, useRef} from 'react';
-import {Animated, TouchableWithoutFeedback, ViewStyle} from 'react-native';
+import {
+  Animated,
+  TouchableWithoutFeedback,
+  TouchableWithoutFeedbackProps,
+  ViewStyle,
+} from 'react-native';
 
 type Props = {
   style?: ViewStyle;
-};
-const TransformOnTouch: FC<Props> = ({style, children}) => {
+} & TouchableWithoutFeedbackProps;
+const TransformOnTouch: FC<Props> = ({style, children, ...props}) => {
   const scale = useRef(new Animated.Value(1)).current;
 
   const onTouch = (type: 'out' | 'in') => {
@@ -17,7 +22,8 @@ const TransformOnTouch: FC<Props> = ({style, children}) => {
   return (
     <TouchableWithoutFeedback
       onPressIn={() => onTouch('in')}
-      onPressOut={() => onTouch('out')}>
+      onPressOut={() => onTouch('out')}
+      {...props}>
       <Animated.View
         style={[
           style || {},

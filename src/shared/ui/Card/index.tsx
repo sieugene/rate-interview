@@ -17,7 +17,7 @@ const Card = ({children, style}: Props) => {
 };
 Card.Root = styled.View`
   background-color: white;
-  padding: 8px;
+  padding: 16px;
   border-radius: 10px;
 `;
 
