@@ -21,7 +21,7 @@ const VacancyDetails = ({vacancyId, visible, onClose}: Props) => {
 
   return (
     <View>
-      <Modal visible={visible} onClose={onClose} animationType="slide">
+      <Modal visible={visible} onClose={onClose}>
         <PullBoxVerticall
           renderBoxTrigger={panHandlers => (
             <VacancyDetails.TopTrigger {...panHandlers} />

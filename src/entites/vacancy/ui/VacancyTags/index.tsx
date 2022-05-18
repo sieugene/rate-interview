@@ -1,9 +1,8 @@
 import styled from '@emotion/native';
 import React from 'react';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {VacancyType} from '../../../../features/vacancies/model/types';
 import {Tabs, Typography} from '../../../../shared/ui';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {View} from 'react-native';
 
 type Props = {
   vacancy: VacancyType;
