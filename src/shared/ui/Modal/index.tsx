@@ -42,3 +42,12 @@ Modal.Overlay = styled.View`
   height: 100%;
   width: 100%;
 `;
+
+Modal.Body = styled.View`
+  background-color: white;
+  border-radius: 20px 20px 0px 0px;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  padding-top: 30px;
+`;

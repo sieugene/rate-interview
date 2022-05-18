@@ -3,15 +3,10 @@ import styled from '@emotion/native';
 import React, {useState} from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 import {VacancyType} from '../../../../features/vacancies/model/types';
-import {
-  Button,
-  Card,
-  TransformOnTouch,
-  Typography,
-} from '../../../../shared/ui';
+import {VacancyRate} from '../../../../features/vacancy-rate';
+import {Card, TransformOnTouch, Typography} from '../../../../shared/ui';
 import VacancyDetails from '../VacancyDetails';
 import {VacancyTags} from '../VacancyTags';
-import Icon from 'react-native-vector-icons/Ionicons';
 
 type Props = {
   vacancy: VacancyType;
@@ -50,13 +45,7 @@ const VacancyItem = ({vacancy, styles}: Props) => {
 
           <VacancyItem.Bottom>
             <VacancyTags vacancy={vacancy} />
-            <Button
-              style={{width: 78, height: 32}}
-              typographyProps={{
-                variant: 'small',
-              }}>
-              Rate
-            </Button>
+            <VacancyRate />
           </VacancyItem.Bottom>
         </VacancyItem.Root>
       </TransformOnTouch>

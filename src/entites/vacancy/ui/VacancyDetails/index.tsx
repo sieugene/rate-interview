@@ -78,14 +78,7 @@ VacancyDetails.TopTrigger = styled.View`
   z-index: 999;
 `;
 
-VacancyDetails.Root = styled.View`
-  background-color: white;
-  border-radius: 20px 20px 0px 0px;
-  flex: 1;
-  width: 100%;
-  height: 100%;
-  padding-top: 30px;
-`;
+VacancyDetails.Root = styled(Modal.Body)``;
 VacancyDetails.Head = styled.View`
   padding: 10px;
   align-items: center;
