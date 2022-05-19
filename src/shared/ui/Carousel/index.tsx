@@ -6,6 +6,7 @@ import {
   Dimensions,
   FlatList,
   Pressable,
+  View,
   ViewStyle,
 } from 'react-native';
 
@@ -25,7 +26,6 @@ const Carousel = ({items, onPageChange, itemStyle}: Props) => {
     if (page === currentPage.current) return;
     currentPage.current = page;
     onPageChange?.(page);
-    console.log('Page change to', page);
   };
 
   const opacityAnimation = (index: number) =>
@@ -48,21 +48,20 @@ const Carousel = ({items, onPageChange, itemStyle}: Props) => {
         data={items}
         keyExtractor={(_, index) => `${index}`}
         renderItem={info => {
-          const {index, item} = info;
+          const {item} = info;
 
           return (
-            <Animated.View
+            <View
               style={[
                 {
                   width,
                   height,
                   overflow: 'visible',
-                  opacity: opacityAnimation(index),
                 },
                 itemStyle || {},
               ]}>
               {item}
-            </Animated.View>
+            </View>
           );
         }}
         onScroll={Animated.event(
@@ -74,9 +73,14 @@ const Carousel = ({items, onPageChange, itemStyle}: Props) => {
           {useNativeDriver: false},
         )}
         onMomentumScrollEnd={e => {
-          const contentOffset = e.nativeEvent.contentOffset;
-          const viewSize = e.nativeEvent.layoutMeasurement;
-          setPage(Math.floor(contentOffset.x / viewSize.width));
+          const pageNumber = Math.min(
+            Math.max(
+              Math.floor(e.nativeEvent.contentOffset.x / width + 0.5) + 1,
+              0,
+            ),
+            items.length,
+          );
+          setPage(pageNumber - 1);
         }}
       />
 

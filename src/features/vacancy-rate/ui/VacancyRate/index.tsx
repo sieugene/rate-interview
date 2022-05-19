@@ -57,5 +57,6 @@ const VacancyRate = () => {
 
 VacancyRate.Root = styled(Modal.Body)`
   border-radius: 0;
+  padding: 0;
 `;
 export default VacancyRate;
