@@ -1,12 +1,13 @@
 import styled from '@emotion/native';
 import React, {useState} from 'react';
 import {View} from 'react-native';
-import {Button, Typography} from '../../../../shared/ui';
+import {Button} from '../../../../shared/ui';
 import Carousel from '../../../../shared/ui/Carousel';
 import {Modal} from '../../../../shared/ui/Modal';
-import {AnimationOverlay} from '../AnimationOverlay';
+import {PulseBlinkBackground} from '../PulseBlinkBackground';
 
 const VacancyRate = () => {
+  const [trigger, setTrigger] = useState(false);
   const [visible, setVisible] = useState(false);
   const onOpen = () => {
     setVisible(true);
@@ -19,18 +20,27 @@ const VacancyRate = () => {
     <View>
       <Modal visible={visible} onClose={onClose}>
         <VacancyRate.Root>
-          <Typography>text!</Typography>
-          <Carousel
-            items={[
-              <AnimationOverlay />,
-              <View style={{backgroundColor: 'red', flex: 1}}>
-                <Typography>content</Typography>
-              </View>,
-              <View style={{backgroundColor: 'orange', flex: 1}}>
-                <Typography>content</Typography>
-              </View>,
-            ]}
-          />
+          <View>
+            <Carousel
+              onPageChange={() => {
+                setTrigger(!trigger);
+              }}
+              items={[
+                <PulseBlinkBackground
+                  trigger={trigger}
+                  style={{backgroundColor: 'red'}}
+                />,
+                <PulseBlinkBackground
+                  trigger={trigger}
+                  style={{backgroundColor: 'orange'}}
+                />,
+                <PulseBlinkBackground
+                  trigger={trigger}
+                  style={{backgroundColor: 'blue'}}
+                />,
+              ]}
+            />
+          </View>
         </VacancyRate.Root>
       </Modal>
       <Button
@@ -47,6 +57,5 @@ const VacancyRate = () => {
 
 VacancyRate.Root = styled(Modal.Body)`
   border-radius: 0;
-  padding: 10px;
 `;
 export default VacancyRate;

@@ -1,16 +1,39 @@
 /* eslint-disable react-native/no-inline-styles */
 import styled from '@emotion/native';
 import React, {useRef} from 'react';
-import {Animated, Dimensions, FlatList, Pressable} from 'react-native';
+import {
+  Animated,
+  Dimensions,
+  FlatList,
+  Pressable,
+  ViewStyle,
+} from 'react-native';
 
 type Props = {
   items: React.ReactNode[];
+  onPageChange?: (page: number) => void;
+  itemStyle?: ViewStyle;
 };
-const Carousel = ({items}: Props) => {
+const Carousel = ({items, onPageChange, itemStyle}: Props) => {
+  const currentPage = useRef(0);
   const flatList = useRef<FlatList>(null);
   const {width, height} = Dimensions.get('window');
   const scrollX = useRef(new Animated.Value(0)).current;
   const stepPosition = Animated.divide(scrollX, width);
+
+  const setPage = (page: number) => {
+    if (page === currentPage.current) return;
+    currentPage.current = page;
+    onPageChange?.(page);
+    console.log('Page change to', page);
+  };
+
+  const opacityAnimation = (index: number) =>
+    stepPosition.interpolate({
+      inputRange: [index - 1, index, index + 1],
+      outputRange: [0.4, 1, 0.4],
+      extrapolate: 'clamp',
+    });
 
   return (
     <Carousel.Root>
@@ -26,19 +49,18 @@ const Carousel = ({items}: Props) => {
         keyExtractor={(_, index) => `${index}`}
         renderItem={info => {
           const {index, item} = info;
-          const opacity = stepPosition.interpolate({
-            inputRange: [index - 1, index, index + 1],
-            outputRange: [0.4, 1, 0.4],
-            extrapolate: 'clamp',
-          });
+
           return (
             <Animated.View
-              style={{
-                width,
-                height,
-                overflow: 'visible',
-                opacity,
-              }}>
+              style={[
+                {
+                  width,
+                  height,
+                  overflow: 'visible',
+                  opacity: opacityAnimation(index),
+                },
+                itemStyle || {},
+              ]}>
               {item}
             </Animated.View>
           );
@@ -51,16 +73,15 @@ const Carousel = ({items}: Props) => {
           ],
           {useNativeDriver: false},
         )}
+        onMomentumScrollEnd={e => {
+          const contentOffset = e.nativeEvent.contentOffset;
+          const viewSize = e.nativeEvent.layoutMeasurement;
+          setPage(Math.floor(contentOffset.x / viewSize.width));
+        }}
       />
 
       <Carousel.Steps>
         {items?.map((_, index) => {
-          const opacity = stepPosition.interpolate({
-            inputRange: [index - 1, index, index + 1],
-            outputRange: [0.4, 1, 0.4],
-            extrapolate: 'clamp',
-          });
-
           return (
             <Pressable
               key={`step-${index}`}
@@ -69,8 +90,11 @@ const Carousel = ({items}: Props) => {
                   index,
                   animated: true,
                 });
+                setTimeout(() => {
+                  setPage(index);
+                }, 200);
               }}>
-              <Carousel.Step style={{opacity}} />
+              <Carousel.Step style={{opacity: opacityAnimation(index)}} />
             </Pressable>
           );
         })}
@@ -97,7 +121,6 @@ Carousel.Step = styled(Animated.View)`
   border-radius: 7.5px;
   margin: 2.5px;
   background: #fff;
-  /* border: 3px solid #fff; */
 `;
 
 export default Carousel;

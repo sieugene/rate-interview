@@ -1,38 +1,37 @@
 /* eslint-disable react-native/no-inline-styles */
 import styled from '@emotion/native';
-import React, {useEffect, useRef, useState} from 'react';
-import {Animated, Easing, Pressable} from 'react-native';
-import {Typography} from '../../../shared/ui';
+import React, {useEffect, useRef} from 'react';
+import {Animated, Easing, Pressable, ViewStyle} from 'react-native';
+import {Typography} from '../../../../shared/ui';
 
-// предоставить рендер пропы или колбэки на изменение элемента для старта анимации
-export const AnimationOverlay = () => {
-  const [animated, setAnimated] = useState(false);
+type Props = {
+  trigger: boolean;
+  style?: ViewStyle;
+};
+export const PulseBlinkBackground = ({trigger, style}: Props) => {
   const animatedValue = useRef(new Animated.Value(0)).current;
 
   const handleAnimate = () => {
+    animatedValue.setValue(0);
     Animated.timing(animatedValue, {
-      toValue: animated ? 0 : 1,
+      toValue: 1,
       duration: 400,
       easing: Easing.ease,
-      useNativeDriver: false,
+      useNativeDriver: true,
     }).start();
-
-    if (animated) {
-      setAnimated(false);
-      return;
-    }
-    setAnimated(true);
   };
   useEffect(() => {
     handleAnimate();
     return () => {
       handleAnimate();
     };
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [trigger]);
+
   return (
-    <AnimationOverlay.Root>
+    <PulseBlinkBackground.Root style={[style || {}]}>
       <Pressable onPress={handleAnimate}>
-        <AnimationOverlay.Overlay
+        <PulseBlinkBackground.Overlay
           style={{
             position: 'absolute',
             height: 20,
@@ -55,18 +54,19 @@ export const AnimationOverlay = () => {
         />
         <Typography>content</Typography>
       </Pressable>
-    </AnimationOverlay.Root>
+    </PulseBlinkBackground.Root>
   );
 };
 
-AnimationOverlay.Root = styled.View`
+PulseBlinkBackground.Root = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  background-color: blue;
 `;
 
-AnimationOverlay.Overlay = styled(Animated.View)`
-  background: red;
+PulseBlinkBackground.Overlay = styled(Animated.View)`
   border-radius: 20px;
+  background-color: #ffffff59;
 `;
