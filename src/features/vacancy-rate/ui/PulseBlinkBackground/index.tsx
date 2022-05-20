@@ -2,13 +2,19 @@
 import styled from '@emotion/native';
 import React, {useEffect, useRef} from 'react';
 import {Animated, Easing, ViewStyle} from 'react-native';
-import {Typography} from '../../../../shared/ui';
 
 type Props = {
   trigger: boolean;
   style?: ViewStyle;
+  pulseColor?: string;
+  children?: React.ReactNode;
 };
-export const PulseBlinkBackground = ({trigger, style}: Props) => {
+export const PulseBlinkBackground = ({
+  trigger,
+  pulseColor = '#ffffff4a',
+  style,
+  children,
+}: Props) => {
   const animatedValue = useRef(new Animated.Value(0)).current;
 
   const handleAnimate = () => {
@@ -16,7 +22,7 @@ export const PulseBlinkBackground = ({trigger, style}: Props) => {
     animatedValue.setValue(0);
     Animated.timing(animatedValue, {
       toValue: 1,
-      duration: 450,
+      duration: 350,
       easing: Easing.ease,
       useNativeDriver: true,
     }).start();
@@ -33,6 +39,7 @@ export const PulseBlinkBackground = ({trigger, style}: Props) => {
     <PulseBlinkBackground.Root style={[style || {}]}>
       <PulseBlinkBackground.Overlay
         style={{
+          backgroundColor: pulseColor,
           position: 'absolute',
           height: 20,
           width: 20,
@@ -56,7 +63,7 @@ export const PulseBlinkBackground = ({trigger, style}: Props) => {
           ],
         }}
       />
-      <Typography>content</Typography>
+      {children}
     </PulseBlinkBackground.Root>
   );
 };
@@ -66,10 +73,8 @@ PulseBlinkBackground.Root = styled.View`
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background-color: blue;
 `;
 
 PulseBlinkBackground.Overlay = styled(Animated.View)`
   border-radius: 20px;
-  background-color: #ffffff59;
 `;

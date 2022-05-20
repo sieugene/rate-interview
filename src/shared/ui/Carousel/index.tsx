@@ -9,6 +9,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
+import {useDebouncedCallback} from 'use-debounce';
 
 type Props = {
   items: React.ReactNode[];
@@ -22,11 +23,11 @@ const Carousel = ({items, onPageChange, itemStyle}: Props) => {
   const scrollX = useRef(new Animated.Value(0)).current;
   const stepPosition = Animated.divide(scrollX, width);
 
-  const setPage = (page: number) => {
+  const setPage = useDebouncedCallback((page: number) => {
     if (page === currentPage.current) return;
     currentPage.current = page;
     onPageChange?.(page);
-  };
+  }, 100);
 
   const opacityAnimation = (index: number) =>
     stepPosition.interpolate({
@@ -94,9 +95,8 @@ const Carousel = ({items, onPageChange, itemStyle}: Props) => {
                   index,
                   animated: true,
                 });
-                setTimeout(() => {
-                  setPage(index);
-                }, 200);
+
+                setPage(index);
               }}>
               <Carousel.Step style={{opacity: opacityAnimation(index)}} />
             </Pressable>
