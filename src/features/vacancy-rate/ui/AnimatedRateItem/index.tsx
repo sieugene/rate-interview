@@ -1,16 +1,18 @@
 import styled from '@emotion/native';
 import React from 'react';
 import {EmojiGIfCircle} from '../EmojiGIfCircle';
-import {PulseBlinkBackground} from '../PulseBlinkBackground';
+import {
+  PulseBlinkBackground,
+  PulseBlinkBackgroundProps,
+} from '../PulseBlinkBackground';
 
 type Props = {
-  trigger: boolean;
   children: React.ReactNode;
   activeColor: {
     active: string;
     prevColor: string;
   };
-};
+} & Pick<PulseBlinkBackgroundProps, 'trigger'>;
 export const AnimatedRateItem = ({trigger, activeColor, children}: Props) => {
   return (
     <AnimatedRateItem.Root>

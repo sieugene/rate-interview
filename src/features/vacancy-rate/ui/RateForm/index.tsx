@@ -11,6 +11,11 @@ export const RateForm = ({style, rate}: Props) => {
   const form = rate;
   return (
     <RateForm.Root style={[style || {}]}>
+      {/* <Modal visible={true} onClose={() => {}}>
+        <View>
+          <Typography>tyt?</Typography>
+        </View>
+      </Modal> */}
       <Typography variant="h3" color="white" fontWeight="simeBold">
         Rate your experience
       </Typography>

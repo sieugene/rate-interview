@@ -39,11 +39,16 @@ const VacancyRate = () => {
   };
 
   const pepesIcons = [VomitPepe, BsdownPepe, GlarePepe, SupPepe, OkPepe]?.map(
-    (Pepe, index) => (
-      <AnimatedRateItem activeColor={activeColor} trigger={trigger} key={index}>
-        <Pepe style={{width: 150, height: 150}} />
-      </AnimatedRateItem>
-    ),
+    (Pepe, index) => {
+      return (
+        <AnimatedRateItem
+          activeColor={activeColor}
+          trigger={trigger}
+          key={index}>
+          <Pepe style={{width: 150, height: 150}} />
+        </AnimatedRateItem>
+      );
+    },
   );
 
   return (
@@ -54,12 +59,12 @@ const VacancyRate = () => {
             startPage={form.rate.star}
             stepsStyle={{bottom: 150}}
             onPageChange={page => {
-              setTrigger(!trigger);
               form.setRate(prev => ({...prev, star: page}));
               setActiveColor({
                 active: colorsOfSlide[page],
                 prevColor: activeColor.active,
               });
+              setTrigger(!trigger);
             }}
             items={pepesIcons}
           />

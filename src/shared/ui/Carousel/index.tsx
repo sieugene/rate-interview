@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import styled from '@emotion/native';
-import React, {useEffect, useRef} from 'react';
+import React, {memo, useEffect, useMemo, useRef} from 'react';
 import {
   Animated,
   Dimensions,
@@ -9,7 +9,6 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {useDebouncedCallback} from 'use-debounce';
 
 type Props = {
   items: React.ReactNode[];
@@ -25,17 +24,18 @@ const Carousel = ({
   stepsStyle,
   startPage,
 }: Props) => {
+  const memoizedItems = useMemo(() => items, [items]);
   const currentPage = useRef(startPage);
-  const flatList = useRef<FlatList>(null);
+  const flatList = useRef<FlatList<Props['items'][0]> | null>(null);
   const {width, height} = Dimensions.get('window');
   const scrollX = useRef(new Animated.Value(0)).current;
   const stepPosition = Animated.divide(scrollX, width);
 
-  const setPage = useDebouncedCallback((page: number) => {
+  const setPage = (page: number) => {
     if (page === currentPage.current) return;
     currentPage.current = page;
     onPageChange?.(page);
-  }, 100);
+  };
 
   const opacityAnimation = (index: number) =>
     stepPosition.interpolate({
@@ -61,6 +61,7 @@ const Carousel = ({
   return (
     <Carousel.Root>
       <FlatList
+        initialNumToRender={currentPage.current}
         getItemLayout={(data, index) => ({
           length: width,
           offset: width * index,
@@ -73,7 +74,7 @@ const Carousel = ({
         showsHorizontalScrollIndicator={false}
         scrollEventThrottle={16}
         snapToAlignment="center"
-        data={items}
+        data={memoizedItems}
         keyExtractor={(_, index) => `${index}`}
         renderItem={info => {
           const {item} = info;
@@ -106,14 +107,14 @@ const Carousel = ({
               Math.floor(e.nativeEvent.contentOffset.x / width + 0.5) + 1,
               0,
             ),
-            items.length,
+            memoizedItems.length,
           );
           setPage(pageNumber - 1);
         }}
       />
 
       <Carousel.Steps style={[stepsStyle || {}]}>
-        {items?.map((_, index) => {
+        {memoizedItems?.map((_, index) => {
           return (
             <Pressable
               key={`step-${index}`}
@@ -151,4 +152,4 @@ Carousel.Step = styled(Animated.View)`
   background: #fff;
 `;
 
-export default Carousel;
+export default memo(Carousel);
