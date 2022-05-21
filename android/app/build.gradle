@@ -271,6 +271,12 @@ dependencies {
 
     implementation project(':react-native-vector-icons')
 
+    // GIF support
+    implementation 'com.facebook.fresco:fresco:2.6.0'
+    implementation 'com.facebook.fresco:animated-gif:2.6.0'
+    implementation 'com.facebook.fresco:animated-webp:2.6.0'
+    implementation 'com.facebook.fresco:webpsupport:2.6.0'
+
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'
     }

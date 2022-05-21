@@ -1,15 +1,22 @@
 import styled from '@emotion/native';
 import React, {useState} from 'react';
-import {Text, View} from 'react-native';
-import {Button, Typography} from '../../../../shared/ui';
+import {View} from 'react-native';
+import {
+  AngryPepe,
+  EvilPepe,
+  InspectPepe,
+  NoPepe,
+} from '../../../../shared/images';
+import {Button} from '../../../../shared/ui';
 import Carousel from '../../../../shared/ui/Carousel';
 import {Modal} from '../../../../shared/ui/Modal';
-import {PulseBlinkBackground} from '../PulseBlinkBackground';
+import {AnimatedRateItemForm} from '../AnimatedRateItemForm';
 
 const colorsOfSlide = {
-  0: 'red',
-  1: 'orange',
-  2: 'blue',
+  0: '#b06843',
+  1: 'blue',
+  2: '#5a8d40',
+  3: '#fd4d15',
 } as {[key: number]: string};
 
 const VacancyRate = () => {
@@ -40,32 +47,26 @@ const VacancyRate = () => {
                 });
               }}
               items={[
-                <PulseBlinkBackground
-                  trigger={trigger}
-                  pulseColor={activeColor.active}
-                  style={{
-                    backgroundColor: activeColor.prevColor,
-                  }}>
-                  <VacancyRate.Choise>
-                    <Text style={{fontSize: 66, color: 'black'}}>😀</Text>
-                  </VacancyRate.Choise>
-                </PulseBlinkBackground>,
-                <PulseBlinkBackground
-                  trigger={trigger}
-                  pulseColor={activeColor.active}
-                  style={{
-                    backgroundColor: activeColor.prevColor,
-                  }}>
-                  <Typography>🤣</Typography>
-                </PulseBlinkBackground>,
-                <PulseBlinkBackground
-                  trigger={trigger}
-                  pulseColor={activeColor.active}
-                  style={{
-                    backgroundColor: activeColor.prevColor,
-                  }}>
-                  <Typography>🤣</Typography>
-                </PulseBlinkBackground>,
+                <AnimatedRateItemForm
+                  activeColor={activeColor}
+                  trigger={trigger}>
+                  <AngryPepe style={{width: 150, height: 150}} />
+                </AnimatedRateItemForm>,
+                <AnimatedRateItemForm
+                  activeColor={activeColor}
+                  trigger={trigger}>
+                  <NoPepe style={{width: 150, height: 150}} />
+                </AnimatedRateItemForm>,
+                <AnimatedRateItemForm
+                  activeColor={activeColor}
+                  trigger={trigger}>
+                  <InspectPepe style={{width: 150, height: 150, margin: 5}} />
+                </AnimatedRateItemForm>,
+                <AnimatedRateItemForm
+                  activeColor={activeColor}
+                  trigger={trigger}>
+                  <EvilPepe style={{width: 150, height: 150}} />
+                </AnimatedRateItemForm>,
               ]}
             />
           </View>
@@ -88,13 +89,4 @@ VacancyRate.Root = styled(Modal.Body)`
   padding: 0;
 `;
 
-VacancyRate.Choise = styled.View`
-  border: 1px solid black;
-  flex: 1;
-  width: 100%;
-  height: 100%;
-  padding: 10px;
-  align-items: center;
-  justify-content: center;
-`;
 export default VacancyRate;
