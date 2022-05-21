@@ -14,6 +14,6 @@ export const EmojiGIfCircle = ({children}: Props) => {
   );
 };
 EmojiGIfCircle.Root = styled.View`
-  border-radius: 75px;
   overflow: hidden;
+  padding: 5px;
 `;

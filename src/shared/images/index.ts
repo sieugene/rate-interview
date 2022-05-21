@@ -1,7 +1,15 @@
 import ComunityIllustration from './Comunity.svg';
-import AngryPepe from './angryPepe';
-import EvilPepe from './evilPepe';
-import InspectPepe from './inspectPepe';
-import NoPepe from './noPepe';
+import VomitPepe from './vomitPepe';
+import SupPepe from './supPepe';
+import GlarePepe from './glarePepe';
+import BsdownPepe from './bsdownPepe';
+import OkPepe from './okPepe';
 
-export {ComunityIllustration, AngryPepe, EvilPepe, InspectPepe, NoPepe};
+export {
+  ComunityIllustration,
+  VomitPepe,
+  SupPepe,
+  GlarePepe,
+  BsdownPepe,
+  OkPepe,
+};

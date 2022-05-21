@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import styled from '@emotion/native';
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {
   Animated,
   Dimensions,
@@ -15,9 +15,17 @@ type Props = {
   items: React.ReactNode[];
   onPageChange?: (page: number) => void;
   itemStyle?: ViewStyle;
+  stepsStyle?: ViewStyle;
+  startPage?: number;
 };
-const Carousel = ({items, onPageChange, itemStyle}: Props) => {
-  const currentPage = useRef(0);
+const Carousel = ({
+  items,
+  onPageChange,
+  itemStyle,
+  stepsStyle,
+  startPage,
+}: Props) => {
+  const currentPage = useRef(startPage);
   const flatList = useRef<FlatList>(null);
   const {width, height} = Dimensions.get('window');
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -36,9 +44,28 @@ const Carousel = ({items, onPageChange, itemStyle}: Props) => {
       extrapolate: 'clamp',
     });
 
+  const scrollTo = (index: number) => {
+    flatList.current?.scrollToIndex({
+      index,
+      animated: true,
+    });
+  };
+
+  useEffect(() => {
+    if (startPage) {
+      scrollTo(startPage);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Carousel.Root>
       <FlatList
+        getItemLayout={(data, index) => ({
+          length: width,
+          offset: width * index,
+          index,
+        })}
         ref={flatList}
         horizontal
         pagingEnabled
@@ -85,16 +112,13 @@ const Carousel = ({items, onPageChange, itemStyle}: Props) => {
         }}
       />
 
-      <Carousel.Steps>
+      <Carousel.Steps style={[stepsStyle || {}]}>
         {items?.map((_, index) => {
           return (
             <Pressable
               key={`step-${index}`}
               onPress={() => {
-                flatList.current?.scrollToIndex({
-                  index,
-                  animated: true,
-                });
+                scrollTo(index);
 
                 setPage(index);
               }}>
