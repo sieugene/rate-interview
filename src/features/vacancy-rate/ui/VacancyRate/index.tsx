@@ -91,7 +91,7 @@ VacancyRate.Root = styled(Modal.Body)`
 VacancyRate.Form = styled(RateForm)`
   position: absolute;
   top: 0;
-  padding: 50px;
+  padding: 30px;
   align-items: center;
 `;
 

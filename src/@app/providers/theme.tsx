@@ -6,6 +6,7 @@ import {StyleSheet} from 'react-native';
 export type CustomizeOptions = typeof theme;
 export type TypographyVariants = keyof typeof typography;
 export type ButtonVariants = keyof typeof buttons;
+export type InputsVariants = keyof typeof inputs;
 export type Colors = keyof typeof colors;
 export type FontWeights = keyof typeof fontWeight;
 
@@ -101,6 +102,15 @@ const typography = {
   `,
 };
 
+const inputs = {
+  base: css`
+    background: #f1f4fa;
+    border-radius: 8px;
+    padding: 10px;
+    ${typography.h6}
+  `,
+};
+
 const boxShadows = StyleSheet.create({
   card: {
     shadowColor: colors.black,
@@ -151,6 +161,7 @@ const theme = {
   typography,
   fontWeight,
   buttons,
+  inputs,
   boxShadows,
 };
 
