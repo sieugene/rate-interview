@@ -45,7 +45,7 @@ const VacancyItem = ({vacancy, styles}: Props) => {
 
           <VacancyItem.Bottom>
             <VacancyTags vacancy={vacancy} />
-            <VacancyRate />
+            <VacancyRate vacancyId={vacancy.id} />
           </VacancyItem.Bottom>
         </VacancyItem.Root>
       </TransformOnTouch>

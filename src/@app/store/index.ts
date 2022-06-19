@@ -1,9 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit';
+import vacanciesRatesSlice from '../../entites/vacancies-rates/model/store';
 import authSlice from '../../features/auth/ui/model/store';
 
 export const store = configureStore({
   reducer: {
     auth: authSlice,
+    vacanciesRates: vacanciesRatesSlice,
   },
 });
 

@@ -2,22 +2,39 @@
 import styled from '@emotion/native';
 import {useTheme} from '@emotion/react';
 import React, {useState} from 'react';
-import {ScrollView, View} from 'react-native';
+import {View} from 'react-native';
 import {useFindVacancyById} from '../../../../features/vacancies/hooks/useFindVacancyById';
+import {VacancyType} from '../../../../features/vacancies/model/types';
 import {PullBoxVerticall, Tabs, Typography} from '../../../../shared/ui';
 import {Modal} from '../../../../shared/ui/Modal';
+import {VacancyRates} from '../../../vacancies-rates/ui';
 
 type Props = {
-  vacancyId: string;
+  vacancyId: VacancyType['id'];
   visible: boolean;
   onClose: () => void;
 };
 const VacancyDetails = ({vacancyId, visible, onClose}: Props) => {
   const theme = useTheme();
-  const tabs = ['Description', 'Rates'];
-  const [activeTab, setActiveTab] = useState(tabs[0]);
 
   const vacancy = useFindVacancyById(vacancyId);
+  const tabs = [
+    {
+      key: 0,
+      title: 'Description',
+      node: (
+        <Typography style={{paddingTop: 10}}>
+          {vacancy?.company?.about}
+        </Typography>
+      ),
+    },
+    {
+      key: 1,
+      title: 'Rates',
+      node: <VacancyRates vacancyId={vacancyId} />,
+    },
+  ];
+  const [activeTab, setActiveTab] = useState(tabs[0].key);
 
   return (
     <View>
@@ -58,11 +75,6 @@ const VacancyDetails = ({vacancyId, visible, onClose}: Props) => {
                   setActiveTab(tab);
                 }}
               />
-              <ScrollView>
-                <Typography style={{paddingTop: 10}}>
-                  {vacancy?.company?.about}
-                </Typography>
-              </ScrollView>
             </VacancyDetails.Content>
           </VacancyDetails.Root>
         </PullBoxVerticall>

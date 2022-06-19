@@ -1,6 +1,8 @@
 import styled from '@emotion/native';
 import React, {useState} from 'react';
 import {View} from 'react-native';
+import {useAppDispatch} from '../../../../@app/store/hooks';
+import {addRate} from '../../../../entites/vacancies-rates/model/store';
 import {
   VomitPepe,
   SupPepe,
@@ -11,6 +13,7 @@ import {
 import {Button} from '../../../../shared/ui';
 import Carousel from '../../../../shared/ui/Carousel';
 import {Modal} from '../../../../shared/ui/Modal';
+import {VacancyType} from '../../../vacancies/model/types';
 import {useRateForm} from '../../hooks/useRateForm';
 import {AnimatedRateItem} from '../AnimatedRateItem';
 import {RateForm} from '../RateForm';
@@ -23,7 +26,11 @@ const colorsOfSlide = {
   4: '#701134',
 } as {[key: number]: string};
 
-const VacancyRate = () => {
+type Props = {
+  vacancyId: VacancyType['id'];
+};
+const VacancyRate = ({vacancyId}: Props) => {
+  const dispatch = useAppDispatch();
   const form = useRateForm();
   const [activeColor, setActiveColor] = useState({
     active: colorsOfSlide[0],
@@ -36,6 +43,23 @@ const VacancyRate = () => {
   };
   const onClose = () => {
     setVisible(false);
+  };
+
+  const onSubmit = () => {
+    dispatch(
+      addRate({
+        rate: {
+          comment: form.rate.description,
+          rate: form.rate.star,
+          vacancyId,
+        },
+      }),
+    );
+    onClose();
+    form.setRate({
+      description: '',
+      star: 0,
+    });
   };
 
   const pepesIcons = [VomitPepe, BsdownPepe, GlarePepe, SupPepe, OkPepe]?.map(
@@ -68,7 +92,7 @@ const VacancyRate = () => {
             }}
             items={pepesIcons}
           />
-          <VacancyRate.Form {...form} />
+          <VacancyRate.Form {...form} onSubmit={onSubmit} />
         </VacancyRate.Root>
       </Modal>
       <Button

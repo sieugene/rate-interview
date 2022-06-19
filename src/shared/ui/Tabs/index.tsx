@@ -1,29 +1,45 @@
 import styled from '@emotion/native';
 import {useTheme} from '@emotion/react';
-import React from 'react';
-import {StyleProp, ViewStyle} from 'react-native';
+import React, {useMemo} from 'react';
+import {ScrollView, StyleProp, ViewStyle} from 'react-native';
 import Typography from '../Typography';
 
 type Props = {
   style?: StyleProp<ViewStyle>;
-  tabs: string[];
-  activeTab: string;
-  onSelect: (tab: string) => void;
+  tabs: {
+    title: string;
+    node?: JSX.Element;
+    key: number;
+  }[];
+  activeTab: number;
+  onSelect: (key: number) => void;
 };
 const Tabs = ({style, tabs, activeTab, onSelect}: Props) => {
   const theme = useTheme();
+  const currentTab = useMemo(
+    () => tabs.find(tab => tab.key === activeTab),
+    [activeTab, tabs],
+  );
 
   return (
-    <Tabs.Root style={[theme.boxShadows.tabs, style || {}]}>
-      {tabs?.map((tab, index) => {
-        const isActive = tab === activeTab;
-        return (
-          <Tabs.Tab active={isActive} key={index} onPress={() => onSelect(tab)}>
-            <Typography color={isActive ? 'black' : 'silver'}>{tab}</Typography>
-          </Tabs.Tab>
-        );
-      })}
-    </Tabs.Root>
+    <>
+      <Tabs.Root style={[theme.boxShadows.tabs, style || {}]}>
+        {tabs?.map((tab, index) => {
+          const isActive = tab.key === currentTab?.key;
+          return (
+            <Tabs.Tab
+              active={isActive}
+              key={index}
+              onPress={() => onSelect(tab.key)}>
+              <Typography color={isActive ? 'black' : 'silver'}>
+                {tab.title}
+              </Typography>
+            </Tabs.Tab>
+          );
+        })}
+      </Tabs.Root>
+      <ScrollView>{currentTab?.node}</ScrollView>
+    </>
   );
 };
 Tabs.Root = styled.View`

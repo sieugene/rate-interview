@@ -8,10 +8,12 @@ import {RateFormProps} from '../../hooks/useRateForm';
 
 type Props = {
   style?: StyleProp<ViewStyle>;
+  onSubmit: () => void;
 } & RateFormProps;
-export const RateForm = ({style, rate, setRate}: Props) => {
+export const RateForm = ({style, rate, setRate, onSubmit}: Props) => {
   const [visible, setVisible] = useState(false);
   const form = rate;
+
   return (
     <RateForm.Root style={[style || {}]}>
       <Modal
@@ -53,11 +55,12 @@ export const RateForm = ({style, rate, setRate}: Props) => {
             backgroundColor: 'black',
             width: '100%',
           }}
+          onPress={onSubmit}
           typographyProps={{
             style: TypographyStyles.style,
             fontWeight: 'simeBold',
           }}>
-          Send rating ({form.star})
+          Send rating ({form.star + 1})
         </Button>
       </View>
     </RateForm.Root>
